@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head th:include="layout :: htmlhead" th:with="title='计划与进程看板'" ></head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <!--头-->
+    <div th:replace="fragments/head :: header"></div>
+
+    <div class="layui-container" style="height: 100%">
+        <div class="layui-carousel" id="test1">
+            <div carousel-item="">
+                <div>
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 4%">
+                        <legend style="margin-left: 36%"><span style="font-weight: bold;font-size:22px;">丹阳荣嘉精密机械有限公司</span></legend>
+                        <legend style="margin-left: 40%"><span style="font-weight: bold;font-size:22px;">计划与进程看板</span></legend>
+                    </fieldset>
+                    <h1 id="clock"></h1>
+                    <table id="demo" lay-filter="test"></table>
+                </div>
+            </div>
+        </div>
+        <!-- 条目中可以是任意内容，如：<img src=""> -->
+    </div>
+
+    <!--底部-->
+    <div th:replace="fragments/footer :: footer"></div>
+    <script src="/js/dateUtils.js"></script>
+    <script src="/js/basic/workstation.js"></script>
+
+
+    <script>
+        layui.use('carousel', function(){
+            var carousel = layui.carousel;
+            //建造实例
+            carousel.render({
+                elem: '#test1'
+                ,width: '100%' //设置容器宽度
+                ,arrow: 'always' //始终显示箭头
+                //,anim: 'updown' //切换动画方式
+                ,full : true
+                ,autoplay: true
+                ,interval: 5000
+            });
+        });
+    </script>
+    <script>
+        layui.use('table', function(){
+            var table = layui.table;
+
+            //第一个实例
+            table.render({
+                elem: '#demo'
+                ,height: 312
+                ,url: '/demo/table/user/' //数据接口
+                ,page: true //开启分页
+                ,cols: [[ //表头
+                    {field: 'id', title: 'ID', width:80, fixed: 'left'}
+                    ,{field: 'customerCode', title: '客户', width:200}
+                    ,{field: 'workshopCode', title: '车间', width:160}
+                    ,{field: 'workStationCode', title: '工位号', width:160}
+                    ,{field: 'invcode', title: '产品编号', width: 160}
+                    ,{field: 'invname', title: '产品名称', width: 200}
+                    ,{field: 'planQty', title: '计划数', width: 160}
+                    ,{field: 'qty', title: '实际合格', width: 160}
+                    ,{field: 'completion', title: '完成率', width: 160}
+                    ,{field: 'state', title: '状态', width: 160}
+                ]]
+            });
+
+        });
+    </script>
+    <script>
+        $(document).ready(
+            setTimeout(function () {
+                var d = new Date()
+                var h = d.getHours()
+                var m = d.getMinutes()
+                var s = d.getSeconds()
+                var hms = h + ":" + m + ":" + s
+
+                //为H1动态赋值
+                $('#clock').innerHTML = hms
+            }, 1000)
+        )
+    </script>
+</div>
+</body>
+</html>

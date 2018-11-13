@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head th:include="layout :: htmlhead" th:with="title='工位看板'"></head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <!--头-->
+    <div th:replace="fragments/head :: header"></div>
+
+    <div class="layui-body" style="margin: 1%">
+        <fieldset>
+            <legend>
+                <a>本日工作计划</a>
+            </legend>
+            <table id="currentPlanList" lay-filter="currentPlanTable"></table>
+        </fieldset>
+
+
+        <script type="text/html" id="optBar">
+            <a class="layui-btn layui-btn-xs" lay-event="start">开工</a>
+            {{#  } }}
+        </script>
+
+        <fieldset>
+            <legend>
+                <a>历史工作计划执行情况</a>
+            </legend>
+            <table id="historyPlanList" lay-filter="historyPlanTable"></table>
+        </fieldset>
+
+
+    </div>
+    <!--底部-->
+    <div th:replace="fragments/footer :: footer"></div>
+    <script src="/js/dateUtils.js"></script>
+    <script src="/js/manufacture/work.js"></script>
+
+</div>
+</body>
+</html>
